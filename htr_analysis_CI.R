@@ -427,6 +427,9 @@ write.csv(health_sev, "sector_output/HTR_round1_health_sev.csv")
 
 
 
+
+
+
 ############## Join and Export all composite indicators ##########
 
 data<-full_join(edu_sev, prot_sev,by = c("district_reporting"="district_reporting"))
@@ -445,43 +448,3 @@ data<-full_join(data, health_sev,by = c("district_reporting"="district_reporting
 
 write.csv(data, "HTR_round1_sev_dist.csv")  
 
-##############
-
-sev_freq<-data %>% 
-  summarize(eie1=sum(htr_eie_rank==1)/n(),
-            eie2=sum(htr_eie_rank==2)/n(),
-            eie3=sum(htr_eie_rank==3)/n(),
-            eie4=sum(htr_eie_rank==4)/n(),
-            eie_sev_high_perc=sum(htr_eie_rank_high)/n(),
-            esnfi1=sum(htr_esnfi_rank==1)/n(),
-            esnfi2=sum(htr_esnfi_rank==2)/n(),
-            esnfi3=sum(htr_esnfi_rank==3)/n(),
-            esnfi4=sum(htr_esnfi_rank==4)/n(),
-            esnfi_sev_high_perc=sum(htr_esnfi_rank_high)/n(),
-            fsa1=sum(htr_fsa_rank==1)/n(),
-            fsa2=sum(htr_fsa_rank==2)/n(),
-            fsa3=sum(htr_fsa_rank==3)/n(),
-            fsa4=sum(htr_fsa_rank==4)/n(),
-            fsac_sev_high_perc=sum(htr_fsa_rank_high)/n(),
-            nut1=sum(htr_nut_rank==1)/n(),
-            nut2=sum(htr_nut_rank==2)/n(),
-            nut3=sum(htr_nut_rank==3)/n(),
-            nut4=sum(htr_nut_rank==4)/n(),
-            nut_sev_high_perc=sum(htr_nut_rank_high)/n(),
-            prot1=sum(htr_prot_rank==1)/n(),
-            prot2=sum(htr_prot_rank==2)/n(),
-            prot3=sum(htr_prot_rank==3)/n(),
-            prot4=sum(htr_prot_rank==4)/n(),
-            prot_sev_high_perc=sum(htr_prot_rank_high)/n(),
-            wash1=sum(htr_wash_rank.x==1)/n(),
-            wash2=sum(htr_wash_rank.x==2)/n(),
-            wash3=sum(htr_wash_rank.x==3)/n(),
-            wash4=sum(htr_wash_rank.x==4)/n(),
-            wash_sev_high_perc=sum(htr_wash_high.x)/n(),
-            health1=sum(htr_health_rank==1)/n(),
-            health2=sum(htr_health_rank==2)/n(),
-            health3=sum(htr_health_rank==3)/n(),
-            health4=sum(htr_health_rank==4)/n(),
-            health_sev_high_perc=sum(htr_health_rank_high)/n())
-  
-write.csv(sev_freq, "HTR_round1_sev_overall.csv")  

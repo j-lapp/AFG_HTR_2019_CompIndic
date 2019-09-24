@@ -1,0 +1,101 @@
+Region,Province,district,total_villages,num_interviews
+South eastern,Ghazni,ab_band,76,18
+Eastern,Laghman,alishang,176,33
+South eastern,Ghazni,andar,257,44
+Southern,Zabul,arghandab_zabul,167,32
+Southern,Hilmand,baghran,249,38
+Western,Farah,bakwa,126,25
+South eastern,Pakteka,barmal,182,34
+North Eastern,Baghlan,baghlan_e_jadid,238,47
+Eastern,Kunar,chapa_dara,118,23
+Western,Ghor,charsadra,68,15
+Southern,Uruzgan,chinarto,93,17
+Capital,Maidan Wardak,chak_e_wardak,209,37
+Eastern,Nangarhar,deh_bala,104,26
+South Eastern,Ghazni,deh_yak,73,15
+North Eastern,Baghlan,dahana_e_ghori,144,25
+South eastern,Pakteka,gomal,159,35
+Eastern,Nangarhar,hesarak,126,33
+Southern,Zabul,kakar,195,37
+Eastern,Kunar,dara_e_pech,151,34
+Northern,Faryab,khwaja_sabz_posh,91,20
+Southern,Kandahar,maruf,424,77
+Capital,Logar,mohammad_agha,170,38
+Southern,Hilmand,musa_qala,136,27
+North Eastern,Kunduz,dasht_e_archi,150,26
+Northern,Faryab,dawlat_abad_faryab,73,14
+Southern,Hilmand,deh_e_shu,118,32
+Southern,Kandahar,reg,84,20
+Western,Farah,khak_e_safed,84,16
+North Eastern,Takhar,khwaja_gahr,62,26
+Northern,Faryab,shirin_tagab,129,23
+Northern,Faryab,almar,104,36
+Northern,Faryab,andkhoy,69,22
+Southern,Kandahar,arghestan,245,49
+Southern,Hilmand,nad_e_ali,85,16
+Western,Farah,bala_buluk,150,30
+Western,Badghis,bala_murghab,164,34
+Eastern,Kunar,bar_kunar,81,15
+Northern,Faryab,bilcheragh,39,6
+North Eastern,Kunduz,chahar_darah,98,51
+Eastern,Nangarhar,chaparhar,58,41
+Southern,Uruzgan,chora,66,12
+Southern,Hilmand,nahr_e_seraj,347,69
+North Eastern,Baghlan,pul_e_khumri,197,44
+Western,Farah,pusht_rod,61,12
+Southern,Zabul,daychopan,106,26
+Southern,Uruzgan,dehrawud,104,25
+North Eastern,Takhar,eshkmesh,130,16
+Western,Farah,farah,168,33
+Southern,Hilmand,garmser,190,36
+Northern,Faryab,garzewan,53,30
+Eastern,Kunar,ghazi_abad,83,23
+Southern,Kandahar,ghorak,88,17
+Western,Badghis,ghormach,124,24
+South eastern,Ghazni,giro,94,21
+North Eastern,Kunduz,imam_sahib,165,60
+Western,Badghis,jawand,398,72
+North Eastern,Badakhshan,jorm,76,24
+Southern,Kandahar,khakrez,177,36
+North Eastern,Kunduz,khan_abad,112,28
+Eastern,Kunar,khas_kunar,52,20
+Southern,Uruzgan,khas_uruzgan,169,46
+Eastern,Nangarhar,khogyani,147,39
+North Eastern,Kunduz,qala_e_zal,52,20
+Eastern,Nangarhar,kot,69,14
+Southern,Hilmand,lashkargah,89,33
+Eastern,Kunar,marawara,63,15
+Southern,Kandahar,maywand,199,44
+Eastern,Nangarhar,muhmand_dara,78,17
+Western,Badghis,muqur_badghis,50,12
+South eastern,Ghazni,muqur_ghazni,118,29
+Northern,Faryab,qaisar,235,43
+Southern,Hilmand,nawzad,201,45
+Southern,Kandahar,nesh,56,11
+Western,Ghor,pasaband,292,49
+Northern,Faryab,pashtun_kot,246,57
+Southern,Hilmand,reg_i_khan_nishin,49,17
+Western,Farah,pur_chaman,321,63
+Capital,Maidan Wardak,sayed_abad,173,30
+South eastern,Ghazni,qarabagh,432,79
+North Eastern,Badakhshan,raghestan,144,33
+Southern,Uruzgan,shahid_e_hassas,122,19
+North Eastern,Takhar,rostaq,210,44
+South eastern,Khost,sabari,91,20
+Southern,Hilmand,sangin,87,27
+South eastern,Pakteka,sarobi,129,30
+Southern,Zabul,shah_joi,209,43
+Southern,Kandahar,shah_wali_kot,295,56
+Eastern,Nangarhar,sher_zad,134,31
+Eastern,Kunar,sheltan,27,9
+Eastern,Kunar,shigal,70,27
+Western,Hirat,shindand,74,17
+Northern,Sar-e-Pul,sozmaqala,82,51
+Eastern,Nangarhar,surkh_rod,124,41
+Southern,Uruzgan,tirinkot,152,29
+South eastern,Pakteka,urgun,131,32
+South eastern,Ghazni,waghaz,108,21
+South eastern,Ghazni,wal_e_muhammad_e_shahid,73,18
+Eastern,Kunar,watapur,93,24
+Southern,Kandahar,zheray,134,23
+South eastern,Paktya,zurmat,230,42
