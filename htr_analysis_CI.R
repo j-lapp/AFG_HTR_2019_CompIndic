@@ -7,7 +7,9 @@ chr<-as.character
 coerc<-function(x){as.numeric(chr(x))}
 ############################# loading data ###################################
 
-data <- read.csv("data/HTR_2019_round1_merged_cleaned_master_2019-09-24.csv", stringsAsFactors = F, na.strings = c("", "NA"))
+data <- read.csv("input/data/HTR_2019_round1_merged_cleaned_master_2019-09-24.csv", stringsAsFactors = F, na.strings = c("", "NA"))
+
+weight<-read.csv("input/weights/REACH_AFG_H2R_R1_weights_0924.csv", stringsAsFactors = F, na.strings = c("", "NA"))
 
 #############################################################################
 #### EDUCATION
@@ -425,10 +427,23 @@ write.csv(health_sev, "sector_output/HTR_round1_health_sev.csv")
 
 ############# Livelihood##########################################
 
+# settlements using the following coping strategies
+# consumed seed
+data$coping_consumed_seed_bin<-case_when(data$coping_consumed_seed=='yes'~1,TRUE~0)
 
+# beg charity
+data$coping_beg_charity_bin<-case_when(data$coping_beg_charity=='yes'~1,TRUE~0)
 
+# sold land
+data$coping_sold_land_bin<-case_when(data$coping_sold_land=='yes'~1,TRUE~0)
 
-
+#group by district
+coping_sev<-data %>% 
+  group_by(district_reporting) %>% 
+  summarize(
+    coping_consumed_seed_perc=sum(coping_consumed_seed_bin)/n(),
+    coping_beg_charity_perc=sum(coping_beg_charity_bin)/n(),
+    coping_sold_land_perc=sum(coping_sold_land_bin)/n())
 
 ############## Join and Export all composite indicators ##########
 
@@ -446,5 +461,62 @@ data<-full_join(data, esnfi_sev,by = c("district_reporting"="district_reporting"
 
 data<-full_join(data, health_sev,by = c("district_reporting"="district_reporting"))
 
+data<-full_join(data, coping_sev,by = c("district_reporting"="district_reporting"))
+
+data<-full_join(data, coping_sev,by = c("district_reporting"="district_reporting"))
+
 write.csv(data, "HTR_round1_sev_dist.csv")  
+
+
+############## OVERALL COMP INDICATORS #################################
+
+# join with weight
+
+data<-full_join(data, weight,by = c("district_reporting"="district"))
+
+data$weight<-coerc(data[["num_interviews"]])/coerc(data[["total_villages"]])
+
+overall_sev<-data %>% 
+  summarize(eie1= weighted.mean(htr_eie_rank==1, weight),
+            eie2= weighted.mean(htr_eie_rank==2, weight),
+            eie3= weighted.mean(htr_eie_rank==3, weight),
+            eie4= weighted.mean(htr_eie_rank==4, weight),
+            eie_sev_high_perc= weighted.mean(htr_eie_rank_high, weight),
+            esnfi1= weighted.mean(htr_esnfi_rank==1, weight),
+            esnfi2= weighted.mean(htr_esnfi_rank==2, weight),
+            esnfi3= weighted.mean(htr_esnfi_rank==3, weight),
+            esnfi4= weighted.mean(htr_esnfi_rank==4, weight),
+            esnfi_sev_high_perc= weighted.mean(htr_esnfi_rank_high, weight),
+            fsa1= weighted.mean(htr_fsa_rank==1, weight),
+            fsa2= weighted.mean(htr_fsa_rank==2, weight),
+            fsa3= weighted.mean(htr_fsa_rank==3, weight),
+            fsa4= weighted.mean(htr_fsa_rank==4, weight),
+            fsac_sev_high_perc= weighted.mean(htr_fsa_rank_high, weight),
+            nut1= weighted.mean(htr_nut_rank==1, weight),
+            nut2= weighted.mean(htr_nut_rank==2, weight),
+            nut3= weighted.mean(htr_nut_rank==3, weight),
+            nut4= weighted.mean(htr_nut_rank==4, weight),
+            nut_sev_high_perc= weighted.mean(htr_nut_rank_high, weight),
+            prot1= weighted.mean(htr_prot_rank==1, weight),
+            prot2= weighted.mean(htr_prot_rank==2, weight),
+            prot3= weighted.mean(htr_prot_rank==3, weight),
+            prot4= weighted.mean(htr_prot_rank==4, weight),
+            prot_sev_high_perc= weighted.mean(htr_prot_rank_high, weight),
+            wash1= weighted.mean(htr_wash_rank.x==1, weight),
+            wash2= weighted.mean(htr_wash_rank.x==2, weight),
+            wash3= weighted.mean(htr_wash_rank.x==3, weight),
+            wash4= weighted.mean(htr_wash_rank.x==4, weight),
+            wash_sev_high_perc= weighted.mean(htr_wash_high.x, weight),
+            health1= weighted.mean(htr_health_rank==1, weight),
+            health2= weighted.mean(htr_health_rank==2, weight),
+            health3= weighted.mean(htr_health_rank==3, weight),
+            health4= weighted.mean(htr_health_rank==4, weight),
+            health_sev_high_perc= weighted.mean(htr_health_rank_high, weight),
+            coping_consumed_seed_perc= weighted.mean(coping_consumed_seed_perc.x, weight),
+            coping_beg_charity_perc= weighted.mean(coping_beg_charity_perc.x, weight),
+            coping_sold_land_perc= weighted.mean(coping_sold_land_perc.x, weight)
+
+  )
+
+write.csv(overall_sev, "HTR_round1_sev_dist_av.csv")  
 
