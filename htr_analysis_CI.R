@@ -300,16 +300,16 @@ fsac_sev<-data %>%
 
 # give weights
 fsac_sev <-fsac_sev %>% 
-  mutate(hunger_extreme=4*village_threshold_quarters(hunger_extreme_perc),
-         hunger_severe=2*village_threshold_quarters(hunger_severe_perc),
-         borrow_extreme=2*village_threshold_quarters(borrow_extreme_perc),
-         borrow_severe=village_threshold_quarters(borrow_severe_perc),
-         reduced_food_extreme=2*village_threshold_quarters(reduced_food_extreme_perc),
-         reduced_food_severe=village_threshold_quarters(reduced_food_severe_perc),
-         livestock_impact_extreme=3*village_threshold_quarters(livestock_impact_extreme_perc),
-         livestock_impact_severe=village_threshold_quarters(livestock_impact_severe_perc),
-         ag_impact_extreme=2*village_threshold_quarters(ag_impact_extreme_perc),
-         ag_impact_severe=village_threshold_quarters(ag_impact_severe_perc))
+  mutate(hunger_extreme=            2 * village_threshold_quarters(hunger_extreme_perc),
+         hunger_severe=             1 * village_threshold_quarters(hunger_severe_perc),
+         borrow_extreme=            2 * village_threshold_quarters(borrow_extreme_perc),
+         borrow_severe=             1 * village_threshold_quarters(borrow_severe_perc),
+         reduced_food_extreme=      2 * village_threshold_quarters(reduced_food_extreme_perc),
+         reduced_food_severe=       1 * village_threshold_quarters(reduced_food_severe_perc),
+         livestock_impact_extreme=  3 * village_threshold_quarters(livestock_impact_extreme_perc),
+         livestock_impact_severe=   2 * village_threshold_quarters(livestock_impact_severe_perc),
+         ag_impact_extreme=         3 * village_threshold_quarters(ag_impact_extreme_perc),
+         ag_impact_severe=          2 * village_threshold_quarters(ag_impact_severe_perc))
 
 # fsac score
 fsac_sev$htr_fsa_score<-coerc(fsac_sev[["hunger_extreme"]])+coerc(fsac_sev[["hunger_severe"]])+coerc(fsac_sev[["borrow_extreme"]])+coerc(fsac_sev[["borrow_severe"]])+coerc(fsac_sev[["reduced_food_extreme"]])+coerc(fsac_sev[["reduced_food_severe"]])+coerc(fsac_sev[["livestock_impact_extreme"]])+coerc(fsac_sev[["livestock_impact_severe"]])+coerc(fsac_sev[["ag_impact_extreme"]])+coerc(fsac_sev[["ag_impact_severe"]])
