@@ -1,3 +1,5 @@
+
+
 ########### weighting function by district
 
 dist_sev_weight<- function(x){
@@ -7,6 +9,22 @@ dist_sev_weight<- function(x){
 }
 
 ######### village threshold function ##################
+
+######### 0-2 -> 0, 25 - 49 -> 1, 50-74 -> 2, 75-100 -> 3 #################
+
+village_threshold_quarters<-function(x){
+  breaks_smaller <- c(0.25, 0.50, 0.75)
+  (case_when(
+    (x<breaks_smaller[1])~0,
+    (x<breaks_smaller[2])~1,
+    (x<breaks_smaller[3])~2,
+    (x <= 1)~3))
+}
+
+is_correct<-village_threshold_quarters(c(0.1,0.24,0.25,0.49,0.5,0.51,0.74,0.75,0.76)) == c(0,0,1,1,2,2,2,3,3)
+if(!all(is_correct)){stop("village_threshold_quarters not working correctly")}
+
+
 ######### 0-19, 20 - 39, 40+ #################
 
 village_threshold_fun<-function(x){
