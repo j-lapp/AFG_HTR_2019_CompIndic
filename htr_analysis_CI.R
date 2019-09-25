@@ -1,3 +1,59 @@
+# to be changed since validation by martin:
+
+# threshold:  - threshold become : [0-24]=0 [25-49]=1 [50-74]=2 [75-100]=3 for all
+# calculation: priority_needs - calculate top 3 priority needs - for the overall (aka weighted)
+# calculation: type_assistance - calculate top 5 type of assisstance - for the overall
+# calculation: no_school_attend - remove from calculation
+# calculation: edu_boy - add in severity score
+# weight: no_edu_children - new weight: 1
+# weight: edu_girl - new weight: 2
+# weight: edu_boy - new weight: 1
+# weight: children_removed - new weight: 3
+# "severity scale: h2r_eie_need - Minimal: <5
+# Stress: 5-10
+# Severe: 11-15
+# Extreme >15"
+# weight: no_shelter_open - change weight: 2
+# weight: nfi_market - change weight: 1
+# "severity scale: h2r_esnfi_need - Minimal: <8
+# Stress: 8-16
+# Severe: 17-25
+# Extreme >25"
+# weight: hunger_severe - change weight: 1
+# weight: hunger_extreme - change weight: 2
+# weight: ag_impact_severe - change weight: 2
+# weight: ag_impact_extreme - change weight: 3
+# weight: livestock_impact_severe - change weight: 2
+# "severity scale: h2r_fsa_need - Minimal: <14
+# Stress: 14-28
+# Severe: 29-43
+# Extreme >43"
+# weight: health_functioning_access - change weight: 1
+# weight: more_ppl_died - change weight : 2
+# weight: health_prio - change weight : 1
+# "severity scale: h2r_health_need - Minimal: <6
+# Stress: 6-11
+# Severe: 12-18
+# Extreme >18"
+# weight: nutrition_no_access - change weight: 1
+# "severity scale: h2r_nutrition_need - Minimal: <3
+# Stress: 3-6
+# Severe: 7-10
+# Extreme >10"
+# weight: safety_rating - change weight: 1
+# "severity scale: h2r_protection_need - Minimal: <14
+# Stress: 14-28
+# Severe: 29-43
+# Extreme >43"
+# weight: water_no_access - change weight: 2
+# "severity scale: h2r_wash_need - Minimal: <7
+# Stress: 7-13
+# Severe: 14-19
+# Extreme >19"
+
+
+
+
 library(tidyverse)
 source("functions_sev.R")
 
@@ -7,9 +63,9 @@ chr<-as.character
 coerc<-function(x){as.numeric(chr(x))}
 ############################# loading data ###################################
 
-data <- read.csv("input/data/HTR_2019_round1_merged_cleaned_master_2019-09-24.csv", stringsAsFactors = F, na.strings = c("", "NA"))
-
-weight<-read.csv("input/weights/REACH_AFG_H2R_R1_weights_0924.csv", stringsAsFactors = F, na.strings = c("", "NA"))
+# changed file names per new files received from Shazmane on 25/09/09 13:40 GVA
+data <- read.csv("input/data/HTR_2019_round1_final_v2.csv", stringsAsFactors = F, na.strings = c("", "NA"))
+weight<-read.csv("input/weights/HTR_round1_sev_dist.csv", stringsAsFactors = F, na.strings = c("", "NA"))
 
 #############################################################################
 #### EDUCATION
@@ -17,11 +73,16 @@ weight<-read.csv("input/weights/REACH_AFG_H2R_R1_weights_0924.csv", stringsAsFac
 # create variables
 
 # % of assessed settlements in which children are not able to attend school
-data$school_attend<-case_when(data$edu_boys=='no'|data$edu_girls=='no'~ 1,TRUE~0)
+data$school_attend_boys<-case_when(data$edu_boys=='no'~ 1,TRUE~0)
+data$school_attend_girls<-case_when(data$edu_girls=='no'~ 1,TRUE~0)
 
+#' TEST:
+# table(data$school_attend_boys,data$edu_boys)
+# table(data$school_attend_girls,data$edu_girls)
 # % of assessed settlements in which at least one chil was reportedly working instead of attending school
 # data$children_no_school<-case_when(data$boys_work_no_school=='yes'|data$girls_work_no_school=='yes'~ 1,TRUE~0)
 
+# there are 'no answer' responses that are currently recoded to 0.
 
 data$edu_children_bin<-case_when(data$edu_children=='no'~ 1,TRUE~0)
 
@@ -32,15 +93,20 @@ data$children_removed_bin<-case_when(data$children_removed=='yes'~ 1,TRUE~0)
 edu_sev<-data %>% 
   group_by(district_reporting) %>% 
   summarize(total_settlements=n(),
-            school_not_attend_perc=sum(school_attend)/n(),
+            school_attend_boys_perc=sum(school_attend_boys)/n(),
+            school_attend_girls_perc=sum(school_attend_girls)/n(),
             no_edu_children_perc=sum(edu_children_bin)/n(),
             children_removed_perc=sum(children_removed_bin)/n())
 
 # give weights
+
+## weights:
+
 edu_sev <-edu_sev %>% 
-  mutate(no_edu_children=2*village_threshold_quarters(no_edu_children_perc),
-         school_not_attend=2*village_threshold_quarters(school_not_attend_perc),
-         children_removed=4*village_threshold_quarters(children_removed_perc))
+  mutate(no_edu_children         = 1 * village_threshold_quarters(no_edu_children_perc),
+         school_not_attend_boys  = 1 * village_threshold_quarters(school_attend_boys_perc),
+         school_not_attend_girls = 2 * village_threshold_quarters(school_attend_girls_perc),
+         children_removed        = 4 * village_threshold_quarters(children_removed_perc))
 
 # edu score
 edu_sev$htr_eie_score<-coerc(edu_sev[["no_edu_children"]])+coerc(edu_sev[["school_not_attend"]])+coerc(edu_sev[["children_removed"]])
