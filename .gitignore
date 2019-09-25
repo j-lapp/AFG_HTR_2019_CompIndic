@@ -3,4 +3,6 @@
 .RData
 .Ruserdata
 /input
+/input/*
 /sector_output
+/sector_output/*
