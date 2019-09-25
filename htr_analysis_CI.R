@@ -312,14 +312,23 @@ fsac_sev <-fsac_sev %>%
          ag_impact_severe=          2 * village_threshold_quarters(ag_impact_severe_perc))
 
 # fsac score
-fsac_sev$htr_fsa_score<-coerc(fsac_sev[["hunger_extreme"]])+coerc(fsac_sev[["hunger_severe"]])+coerc(fsac_sev[["borrow_extreme"]])+coerc(fsac_sev[["borrow_severe"]])+coerc(fsac_sev[["reduced_food_extreme"]])+coerc(fsac_sev[["reduced_food_severe"]])+coerc(fsac_sev[["livestock_impact_extreme"]])+coerc(fsac_sev[["livestock_impact_severe"]])+coerc(fsac_sev[["ag_impact_extreme"]])+coerc(fsac_sev[["ag_impact_severe"]])
+fsac_sev$htr_fsa_score<-coerc(fsac_sev[["hunger_extreme"]])+
+  coerc(fsac_sev[["hunger_severe"]])+
+  coerc(fsac_sev[["borrow_extreme"]])+
+  coerc(fsac_sev[["borrow_severe"]])+
+  coerc(fsac_sev[["reduced_food_extreme"]])+
+  coerc(fsac_sev[["reduced_food_severe"]])+
+  coerc(fsac_sev[["livestock_impact_extreme"]])+
+  coerc(fsac_sev[["livestock_impact_severe"]])+
+  coerc(fsac_sev[["ag_impact_extreme"]])+
+  coerc(fsac_sev[["ag_impact_severe"]])
 
 # fsac rank
 fsac_sev$htr_fsa_rank<-car::recode(fsac_sev$htr_fsa_score,
-                                    "0:8='1';
-                                    9:18='2';
-                                    19:28='3';
-                                    29:36='4'")   
+                                    "0:13='1';
+                                    14:28='2';
+                                    29:43='3';
+                                    44:1000='4'")   
 
 fsac_sev$htr_fsa_rank_high<-car::recode(fsac_sev$htr_fsa_rank,
                                          "1:2='0';
