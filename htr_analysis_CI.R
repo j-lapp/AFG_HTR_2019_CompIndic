@@ -109,14 +109,18 @@ edu_sev <-edu_sev %>%
          children_removed        = 4 * village_threshold_quarters(children_removed_perc))
 
 # edu score
-edu_sev$htr_eie_score<-coerc(edu_sev[["no_edu_children"]])+coerc(edu_sev[["school_not_attend"]])+coerc(edu_sev[["children_removed"]])
+edu_sev$htr_eie_score <- 
+  coerc(edu_sev[["no_edu_children"]])+
+  coerc(edu_sev[["school_not_attend_boys"]])+
+  coerc(edu_sev[["school_not_attend_boys"]])+
+  coerc(edu_sev[["children_removed"]])
 
 # edu rank
 edu_sev$htr_eie_rank<-car::recode(edu_sev$htr_eie_score,
-                             "0:3='1';
-                             4:7='2';
-                             8:11='3';
-                             12:16='4'")   
+                             "0:4='1';
+                             5:10='2';
+                             11:15='3';
+                             15:1000='4'")   
 
 edu_sev$htr_eie_rank_high<-car::recode(edu_sev$htr_eie_rank,
                                          "1:2='0';
@@ -412,11 +416,11 @@ esnfi_sev<-data %>%
 
 # give weights
 esnfi_sev <-esnfi_sev %>% 
-  mutate(shelter_type_severe=2*village_threshold_quarters(shelter_type_severe_perc),
-         no_shelter_open=village_threshold_quarters(no_shelter_open_perc),
-         shelter_destroyed_extreme=3*village_threshold_quarters(shelter_destroyed_extreme_perc),
-         shelter_destroyed_severe=2*village_threshold_quarters(shelter_destroyed_severe_perc),
-         nfi_market=2*village_threshold_quarters(nfi_market_perc))
+  mutate(shelter_type_severe=        2*village_threshold_quarters(shelter_type_severe_perc),
+         no_shelter_open=            2*village_threshold_quarters(no_shelter_open_perc),
+         shelter_destroyed_extreme=  3*village_threshold_quarters(shelter_destroyed_extreme_perc),
+         shelter_destroyed_severe=   2*village_threshold_quarters(shelter_destroyed_severe_perc),
+         nfi_market=                 1*village_threshold_quarters(nfi_market_perc))
 
 # esnfi score
 esnfi_sev$htr_esnfi_score<-coerc(esnfi_sev[["shelter_type_severe"]])+coerc(esnfi_sev[["no_shelter_open"]])+coerc(esnfi_sev[["shelter_destroyed_extreme"]])+coerc(esnfi_sev[["shelter_destroyed_severe"]])+coerc(esnfi_sev[["nfi_market"]])
