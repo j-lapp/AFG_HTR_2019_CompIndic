@@ -38,9 +38,9 @@ edu_sev<-data %>%
 
 # give weights
 edu_sev <-edu_sev %>% 
-  mutate(no_edu_children=2*village_threshold_fun(no_edu_children_perc),
-         school_not_attend=2*village_threshold_fun(school_not_attend_perc),
-         children_removed=4*village_threshold_fun_16_32(children_removed_perc))
+  mutate(no_edu_children=2*village_threshold_quarters(no_edu_children_perc),
+         school_not_attend=2*village_threshold_quarters(school_not_attend_perc),
+         children_removed=4*village_threshold_quarters(children_removed_perc))
 
 # edu score
 edu_sev$htr_eie_score<-coerc(edu_sev[["no_edu_children"]])+coerc(edu_sev[["school_not_attend"]])+coerc(edu_sev[["children_removed"]])
@@ -108,15 +108,15 @@ prot_sev<-data %>%
 
 # give weights
 prot_sev <-prot_sev %>% 
-  mutate(protect_incident_extreme=3*village_threshold_fun(protect_incident_extreme_perc),
-         protect_incident_severe=2*village_threshold_fun(protect_incident_severe_perc),
-         gbv_incidents=3*village_threshold_fun(gbv_incidents_perc),
-         phys_injury=3*village_threshold_fun(phys_injury_perc),
-         no_tazkira=village_threshold_fun(no_tazkira_perc),
-         explosive_extreme=3*village_threshold_fun(explosive_extreme_perc),
-         explosive_severe=2*village_threshold_fun(explosive_severe_perc),
-         explosive_stress=village_threshold_fun(explosive_stress_perc),
-         safety_rating=2*village_threshold_fun(safety_rating_perc))
+  mutate(protect_incident_extreme=3*village_threshold_quarters(protect_incident_extreme_perc),
+         protect_incident_severe=2*village_threshold_quarters(protect_incident_severe_perc),
+         gbv_incidents=3*village_threshold_quarters(gbv_incidents_perc),
+         phys_injury=3*village_threshold_quarters(phys_injury_perc),
+         no_tazkira=village_threshold_quarters(no_tazkira_perc),
+         explosive_extreme=3*village_threshold_quarters(explosive_extreme_perc),
+         explosive_severe=2*village_threshold_quarters(explosive_severe_perc),
+         explosive_stress=village_threshold_quarters(explosive_stress_perc),
+         safety_rating=2*village_threshold_quarters(safety_rating_perc))
 
 # prot score
 prot_sev$htr_prot_score<-coerc(prot_sev[["protect_incident_extreme"]])+coerc(prot_sev[["protect_incident_severe"]])+coerc(prot_sev[["gbv_incidents"]])+coerc(prot_sev[["phys_injury"]])+coerc(prot_sev[["no_tazkira"]])+coerc(prot_sev[["explosive_extreme"]])+coerc(prot_sev[["explosive_severe"]])+coerc(prot_sev[["explosive_stress"]])+coerc(prot_sev[["safety_rating"]])
@@ -162,10 +162,10 @@ nut_sev<-data %>%
 
 # give weights
 nut_sev <-nut_sev %>% 
-  mutate(nutrition_no_access=3*village_threshold_fun(nutrition_no_access_perc),
-         malnut_extreme=3*village_threshold_fun(malnut_extreme_perc),
-         malnut_severe=2*village_threshold_fun(malnut_severe_perc),
-         malnut_stress=village_threshold_fun(malnut_stress_perc));
+  mutate(nutrition_no_access=3*village_threshold_quarters(nutrition_no_access_perc),
+         malnut_extreme=3*village_threshold_quarters(malnut_extreme_perc),
+         malnut_severe=2*village_threshold_quarters(malnut_severe_perc),
+         malnut_stress=village_threshold_quarters(malnut_stress_perc));
 
 nut_sev$malnutrition_score<-case_when(nut_sev$malnut_extreme_perc>0.495~nut_sev$malnut_extreme,nut_sev$malnut_severe==4~nut_sev$malnut_severe,nut_sev$malnut_extreme==2~nut_sev$malnut_extreme,nut_sev$malnut_severe==2~nut_sev$malnut_severe, TRUE~nut_sev$malnut_stress)
 
@@ -229,16 +229,16 @@ fsac_sev<-data %>%
 
 # give weights
 fsac_sev <-fsac_sev %>% 
-  mutate(hunger_extreme=4*village_threshold_fun_16_32(hunger_extreme_perc),
-         hunger_severe=2*village_threshold_fun_16_32(hunger_severe_perc),
-         borrow_extreme=2*village_threshold_fun(borrow_extreme_perc),
-         borrow_severe=village_threshold_fun(borrow_severe_perc),
-         reduced_food_extreme=2*village_threshold_fun(reduced_food_extreme_perc),
-         reduced_food_severe=village_threshold_fun(reduced_food_severe_perc),
-         livestock_impact_extreme=3*village_threshold_fun(livestock_impact_extreme_perc),
-         livestock_impact_severe=village_threshold_fun(livestock_impact_severe_perc),
-         ag_impact_extreme=2*village_threshold_fun(ag_impact_extreme_perc),
-         ag_impact_severe=village_threshold_fun(ag_impact_severe_perc))
+  mutate(hunger_extreme=4*village_threshold_quarters(hunger_extreme_perc),
+         hunger_severe=2*village_threshold_quarters(hunger_severe_perc),
+         borrow_extreme=2*village_threshold_quarters(borrow_extreme_perc),
+         borrow_severe=village_threshold_quarters(borrow_severe_perc),
+         reduced_food_extreme=2*village_threshold_quarters(reduced_food_extreme_perc),
+         reduced_food_severe=village_threshold_quarters(reduced_food_severe_perc),
+         livestock_impact_extreme=3*village_threshold_quarters(livestock_impact_extreme_perc),
+         livestock_impact_severe=village_threshold_quarters(livestock_impact_severe_perc),
+         ag_impact_extreme=2*village_threshold_quarters(ag_impact_extreme_perc),
+         ag_impact_severe=village_threshold_quarters(ag_impact_severe_perc))
 
 # fsac score
 fsac_sev$htr_fsa_score<-coerc(fsac_sev[["hunger_extreme"]])+coerc(fsac_sev[["hunger_severe"]])+coerc(fsac_sev[["borrow_extreme"]])+coerc(fsac_sev[["borrow_severe"]])+coerc(fsac_sev[["reduced_food_extreme"]])+coerc(fsac_sev[["reduced_food_severe"]])+coerc(fsac_sev[["livestock_impact_extreme"]])+coerc(fsac_sev[["livestock_impact_severe"]])+coerc(fsac_sev[["ag_impact_extreme"]])+coerc(fsac_sev[["ag_impact_severe"]])
@@ -291,11 +291,11 @@ wash_sev<-data %>%
 
 # give weights
 wash_sev <-wash_sev %>% 
-  mutate(unprotect_water_extreme=3*village_threshold_fun_16_32(unprotect_water_extreme_perc),
-         unprotect_water_severe=2*village_threshold_fun_16_32(unprotect_water_severe_perc),
-         waste_disposal_severe=village_threshold_fun_50_75(waste_disposal_severe_perc),
-         water_no_access=3*village_threshold_fun(water_no_access_perc),
-         soap_access=village_threshold_fun(soap_access_perc))
+  mutate(unprotect_water_extreme=3*village_threshold_quarters(unprotect_water_extreme_perc),
+         unprotect_water_severe=2*village_threshold_quarters(unprotect_water_severe_perc),
+         waste_disposal_severe=village_threshold_quarters(waste_disposal_severe_perc),
+         water_no_access=3*village_threshold_quarters(water_no_access_perc),
+         soap_access=village_threshold_quarters(soap_access_perc))
 
 # wash score
 wash_sev$htr_wash_score<-coerc(wash_sev[["unprotect_water_extreme"]])+coerc(wash_sev[["unprotect_water_severe"]])+coerc(wash_sev[["waste_disposal_severe"]])+coerc(wash_sev[["water_no_access"]])+coerc(wash_sev[["soap_access"]])
@@ -345,11 +345,11 @@ esnfi_sev<-data %>%
 
 # give weights
 esnfi_sev <-esnfi_sev %>% 
-  mutate(shelter_type_severe=2*village_threshold_fun(shelter_type_severe_perc),
-         no_shelter_open=village_threshold_fun(no_shelter_open_perc),
-         shelter_destroyed_extreme=3*village_threshold_fun(shelter_destroyed_extreme_perc),
-         shelter_destroyed_severe=2*village_threshold_fun(shelter_destroyed_severe_perc),
-         nfi_market=2*village_threshold_fun_50_75(nfi_market_perc))
+  mutate(shelter_type_severe=2*village_threshold_quarters(shelter_type_severe_perc),
+         no_shelter_open=village_threshold_quarters(no_shelter_open_perc),
+         shelter_destroyed_extreme=3*village_threshold_quarters(shelter_destroyed_extreme_perc),
+         shelter_destroyed_severe=2*village_threshold_quarters(shelter_destroyed_severe_perc),
+         nfi_market=2*village_threshold_quarters(nfi_market_perc))
 
 # esnfi score
 esnfi_sev$htr_esnfi_score<-coerc(esnfi_sev[["shelter_type_severe"]])+coerc(esnfi_sev[["no_shelter_open"]])+coerc(esnfi_sev[["shelter_destroyed_extreme"]])+coerc(esnfi_sev[["shelter_destroyed_severe"]])+coerc(esnfi_sev[["nfi_market"]])
@@ -402,11 +402,11 @@ health_sev<-data %>%
 
 # give weights
 health_sev <-health_sev %>% 
-  mutate(more_people_died=village_threshold_fun(more_people_died_perc),
-         health_functioning_access=3*village_threshold_fun(health_functioning_access_perc),
-         health_closed=3*village_threshold_fun(health_closed_perc),
-         birth_hospital=village_threshold_fun(birth_hospital_perc),
-         health_prio=2*village_threshold_fun(health_prio_perc))
+  mutate(more_people_died=village_threshold_quarters(more_people_died_perc),
+         health_functioning_access=3*village_threshold_quarters(health_functioning_access_perc),
+         health_closed=3*village_threshold_quarters(health_closed_perc),
+         birth_hospital=village_threshold_quarters(birth_hospital_perc),
+         health_prio=2*village_threshold_quarters(health_prio_perc))
 
 # edu score
 health_sev$htr_health_score<-coerc(health_sev[["more_people_died"]])+coerc(health_sev[["health_functioning_access"]])+coerc(health_sev[["health_closed"]])+coerc(health_sev[["birth_hospital"]])+coerc(health_sev[["health_prio"]])
