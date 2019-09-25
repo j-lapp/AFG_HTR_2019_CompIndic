@@ -24,6 +24,7 @@ coerc<-function(x){as.numeric(chr(x))}
 data <- read.csv("input/data/HTR_2019_round1_final_v2.csv", stringsAsFactors = F, na.strings = c("", "NA"))
 weight<-read.csv("input/weights/HTR_round1_sev_dist.csv", stringsAsFactors = F, na.strings = c("", "NA"))
 
+weight$weight<-coerc(weight[["X..interview.conducted"]])/coerc(weight[["total_settlements"]])
 
 # turn NAs to "question_skipped":
 noanswer_to_NA<-function(x,source_variables,df=data){
@@ -184,10 +185,10 @@ prot_sev$htr_prot_score<-coerc(prot_sev[["protect_incident_extreme"]])+coerc(pro
 
 # prot rank
 prot_sev$htr_prot_rank<-car::recode(prot_sev$htr_prot_score,
-                              "0:13='1';
-                             14:28='2';
-                             29:43='3';
-                             44:hi='4'")   
+                              "0:9='1';
+                             10:21='2';
+                             22:32='3';
+                             33:hi='4'")   
 
 
 prot_sev$htr_prot_rank_high<-car::recode(prot_sev$htr_prot_rank,
@@ -320,10 +321,10 @@ fsac_sev$htr_fsa_score<-coerc(fsac_sev[["hunger_extreme"]])+
 
 # fsac rank
 fsac_sev$htr_fsa_rank<-car::recode(fsac_sev$htr_fsa_score,
-                                    "0:13='1';
-                                    14:28='2';
-                                    29:43='3';
-                                    44:hi='4'")   
+                                    "0:8='1';
+                                    9:18='2';
+                                    19:28='3';
+                                    29:hi='4'")   
 
 fsac_sev$htr_fsa_rank_high<-car::recode(fsac_sev$htr_fsa_rank,
                                          "1:2='0';
@@ -379,10 +380,10 @@ wash_sev$htr_wash_score<-coerc(wash_sev[["unprotect_water_extreme"]])+coerc(wash
 
 # wash rank
 wash_sev$htr_wash_rank<-car::recode(wash_sev$htr_wash_score,
-                                  "0:6='1';
-                                  7:13='2';
-                                  14:19='3';
-                                  20:hi='4'")   
+                                  "0:4='1';
+                                  5:10='2';
+                                  11:16='3';
+                                  17:hi='4'")   
 
 
 wash_sev$htr_wash_high<-car::recode(wash_sev$htr_wash_rank,
@@ -438,10 +439,10 @@ esnfi_sev$htr_esnfi_score<-coerc(esnfi_sev[["shelter_type_severe"]])+coerc(esnfi
 
 # esnfi rank
 esnfi_sev$htr_esnfi_rank<-car::recode(esnfi_sev$htr_esnfi_score,
-                                    "0:7='1';
-                                    8:16='2';
-                                    17:25='3';
-                                    26:hi='4'")   
+                                    "0:5='1';
+                                    6:12='2';
+                                    13:18='3';
+                                    19:hi='4'")   
 
 esnfi_sev$htr_esnfi_rank_high<-car::recode(esnfi_sev$htr_esnfi_rank,
                                              "1:2='0';
@@ -556,7 +557,7 @@ write.csv(data, "HTR_round1_sev_dist.csv")
 
 data<-full_join(data, weight,by = c("district_reporting"="districts"))
 
-data$weight<-coerc(data[["X..interview.conducted"]])/coerc(data[["total_settlements"]])
+# data$weight<-coerc(data[["interview.conducted"]])/coerc(data[["total_settlements"]])
 
 
 # shorter alternative to the below:
