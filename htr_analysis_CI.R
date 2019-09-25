@@ -55,8 +55,13 @@
 
 
 library(tidyverse)
+rm(list=ls())
 source("functions_sev.R")
 
+
+
+  
+  
 ch<-as.character
 chr<-as.character
 
@@ -69,11 +74,11 @@ coerc<-function(x){as.numeric(chr(x))}
 ############################# loading data ###################################
 
 # changed file names per new files received from Shazmane on 25/09/09 13:40 GVA
-data <- read.csv("input/data/HTR_2019_round1_final_v2.csv", stringsAsFactors = F, na.strings = c("", "NA", "no_answer"))
+data <- read.csv("input/data/HTR_2019_round1_final_v2.csv", stringsAsFactors = F, na.strings = c("", "NA"))
 weight<-read.csv("input/weights/HTR_round1_sev_dist.csv", stringsAsFactors = F, na.strings = c("", "NA"))
 
-# turn NAs to "question_skipped":
 
+# turn NAs to "question_skipped":
 noanswer_to_NA<-function(x,source_variables,df=data){
   any_source_no_answer<- apply(data[,source_variables,drop=FALSE],1,function(x){any(x=="no_answer")})
   x[any_source_no_answer]<-NA
@@ -604,7 +609,7 @@ write.csv(data, "HTR_round1_sev_dist.csv")
 
 data<-full_join(data, weight,by = c("district_reporting"="districts"))
 
-data$weight<-coerc(data[["X..interview.conducted.x"]])/coerc(data[["total_settlements"]])
+data$weight<-coerc(data[["X..interview.conducted"]])/coerc(data[["total_settlements"]])
 
 overall_sev<-data %>% 
   summarize(eie1= weighted.mean(htr_eie_rank==1, weight),
