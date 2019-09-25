@@ -57,6 +57,7 @@ edu_sev$htr_eie_rank_high<-car::recode(edu_sev$htr_eie_rank,
                                          3:4='1'")  
 
 ############## Export analysis in CSV format ############
+if(!dir.exists('./sector_output')){dir.create("./sector_output")}
 write.csv(edu_sev, "sector_output/HTR_round1_edu_sev.csv")
 
 
