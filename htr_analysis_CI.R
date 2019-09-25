@@ -377,19 +377,19 @@ wash_sev<-data %>%
 wash_sev <-wash_sev %>% 
   mutate(unprotect_water_extreme=3*village_threshold_quarters(unprotect_water_extreme_perc),
          unprotect_water_severe=2*village_threshold_quarters(unprotect_water_severe_perc),
-         waste_disposal_severe=village_threshold_quarters(waste_disposal_severe_perc),
-         water_no_access=3*village_threshold_quarters(water_no_access_perc),
-         soap_access=village_threshold_quarters(soap_access_perc))
+         waste_disposal_severe= 1*village_threshold_quarters(waste_disposal_severe_perc),
+         water_no_access=2*village_threshold_quarters(water_no_access_perc),
+         soap_access=1*village_threshold_quarters(soap_access_perc))
 
 # wash score
 wash_sev$htr_wash_score<-coerc(wash_sev[["unprotect_water_extreme"]])+coerc(wash_sev[["unprotect_water_severe"]])+coerc(wash_sev[["waste_disposal_severe"]])+coerc(wash_sev[["water_no_access"]])+coerc(wash_sev[["soap_access"]])
 
 # wash rank
 wash_sev$htr_wash_rank<-car::recode(wash_sev$htr_wash_score,
-                                  "0:4='1';
-                                  5:8='2';
-                                  9:14='3';
-                                  15:20='4'")   
+                                  "0:6='1';
+                                  7:13='2';
+                                  14:19='3';
+                                  20:hi='4'")   
 
 
 wash_sev$htr_wash_high<-car::recode(wash_sev$htr_wash_rank,
