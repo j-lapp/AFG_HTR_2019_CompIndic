@@ -426,10 +426,10 @@ esnfi_sev$htr_esnfi_score<-coerc(esnfi_sev[["shelter_type_severe"]])+coerc(esnfi
 
 # esnfi rank
 esnfi_sev$htr_esnfi_rank<-car::recode(esnfi_sev$htr_esnfi_score,
-                                    "0:4='1';
-                                    5:8='2';
-                                    9:14='3';
-                                    15:20='4'")   
+                                    "0:7='1';
+                                    8:16='2';
+                                    17:25='3';
+                                    26:1000='4'")   
 
 esnfi_sev$htr_esnfi_rank_high<-car::recode(esnfi_sev$htr_esnfi_rank,
                                              "1:2='0';
