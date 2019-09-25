@@ -323,8 +323,8 @@ data$livestock_impact_extreme<-case_when(data$livestock_negative_impacts=='lives
 data$livestock_impact_severe<-case_when(data$livestock_negative_impacts=='livestock_ill'|data$livestock_negative_impacts=='livestock_less_produce'~ 1,TRUE~0) %>% noanswer_to_NA("livestock_negative_impacts")
 
 # ag impact
-data$ag_impact_extreme<-case_when(data$ag_negative_impact=='ag_impact_more_half'~ 1,TRUE~0) %>% noanswer_to_NA("ag_negative_impact")
-data$ag_impact_severe<-case_when(data$ag_negative_impact=='ag_impact_half'~ 1,TRUE~0) %>% noanswer_to_NA("ag_negative_impact")
+data$ag_impact_extreme<-case_when(data$ag_negative_impacts=='ag_impact_more_half'~ 1,TRUE~0) %>% noanswer_to_NA("ag_negative_impacts")
+data$ag_impact_severe<-case_when(data$ag_negative_impacts=='ag_impact_half'~ 1,TRUE~0) %>% noanswer_to_NA("ag_negative_impacts")
 
 # group by district
 fsac_sev<-data %>% 
@@ -602,9 +602,9 @@ write.csv(data, "HTR_round1_sev_dist.csv")
 
 # join with weight
 
-data<-full_join(data, weight,by = c("district_reporting"="district"))
+data<-full_join(data, weight,by = c("district_reporting"="districts"))
 
-data$weight<-coerc(data[["num_interviews"]])/coerc(data[["total_villages"]])
+data$weight<-coerc(data[["X..interview.conducted.x"]])/coerc(data[["total_settlements"]])
 
 overall_sev<-data %>% 
   summarize(eie1= weighted.mean(htr_eie_rank==1, weight),
