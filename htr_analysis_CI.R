@@ -187,17 +187,17 @@ prot_sev <-prot_sev %>%
          explosive_extreme=3*village_threshold_quarters(explosive_extreme_perc),
          explosive_severe=2*village_threshold_quarters(explosive_severe_perc),
          explosive_stress=village_threshold_quarters(explosive_stress_perc),
-         safety_rating=2*village_threshold_quarters(safety_rating_perc))
+         safety_rating= 1 *village_threshold_quarters(safety_rating_perc))
 
 # prot score
 prot_sev$htr_prot_score<-coerc(prot_sev[["protect_incident_extreme"]])+coerc(prot_sev[["protect_incident_severe"]])+coerc(prot_sev[["gbv_incidents"]])+coerc(prot_sev[["phys_injury"]])+coerc(prot_sev[["no_tazkira"]])+coerc(prot_sev[["explosive_extreme"]])+coerc(prot_sev[["explosive_severe"]])+coerc(prot_sev[["explosive_stress"]])+coerc(prot_sev[["safety_rating"]])
 
 # prot rank
 prot_sev$htr_prot_rank<-car::recode(prot_sev$htr_prot_score,
-                              "0:10='1';
-                             11:20='2';
-                             21:30='3';
-                             31:40='4'")   
+                              "0:13='1';
+                             14:28='2';
+                             29:43='3';
+                             44:hi='4'")   
 
 
 prot_sev$htr_prot_rank_high<-car::recode(prot_sev$htr_prot_rank,
