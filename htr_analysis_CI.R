@@ -403,7 +403,6 @@ data$shelter_destroyed_severe<-case_when(data$shelter_destroyed=='20_50_hh'&(dat
 # nfi market
 data$nfi_market_bin<-case_when(data$nfi_market=='no'~1,TRUE~0)
 
-
 #group by district
 esnfi_sev<-data %>% 
   group_by(district_reporting) %>% 
