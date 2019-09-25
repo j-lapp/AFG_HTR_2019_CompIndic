@@ -120,7 +120,7 @@ edu_sev$htr_eie_rank<-car::recode(edu_sev$htr_eie_score,
                              "0:4='1';
                              5:10='2';
                              11:15='3';
-                             15:1000='4'")   
+                             15:hi='4'")   
 
 edu_sev$htr_eie_rank_high<-car::recode(edu_sev$htr_eie_rank,
                                          "1:2='0';
@@ -233,12 +233,16 @@ nut_sev<-data %>%
 
 # give weights
 nut_sev <-nut_sev %>% 
-  mutate(nutrition_no_access=3*village_threshold_quarters(nutrition_no_access_perc),
+  mutate(nutrition_no_access=1*village_threshold_quarters(nutrition_no_access_perc),
          malnut_extreme=3*village_threshold_quarters(malnut_extreme_perc),
          malnut_severe=2*village_threshold_quarters(malnut_severe_perc),
-         malnut_stress=village_threshold_quarters(malnut_stress_perc));
+         malnut_stress=1*village_threshold_quarters(malnut_stress_perc));
 
-nut_sev$malnutrition_score<-case_when(nut_sev$malnut_extreme_perc>0.495~nut_sev$malnut_extreme,nut_sev$malnut_severe==4~nut_sev$malnut_severe,nut_sev$malnut_extreme==2~nut_sev$malnut_extreme,nut_sev$malnut_severe==2~nut_sev$malnut_severe, TRUE~nut_sev$malnut_stress)
+nut_sev$malnutrition_score<-case_when(nut_sev$malnut_extreme_perc>0.495~nut_sev$malnut_extreme,
+                                      nut_sev$malnut_severe==4~nut_sev$malnut_severe,
+                                      nut_sev$malnut_extreme==2~nut_sev$malnut_extreme,
+                                      nut_sev$malnut_severe==2~nut_sev$malnut_severe,
+                                      TRUE~nut_sev$malnut_stress)
 
 # take one of extreme or severe (if one is max then the other cannot be)
 
@@ -247,10 +251,10 @@ nut_sev$htr_nut_score<-coerc(nut_sev[["nutrition_no_access"]])+coerc(nut_sev[["m
 
 # nut rank
 nut_sev$htr_nut_rank<-car::recode(nut_sev$htr_nut_score,
-                            "0:3='1';
-                             4:6='2';
-                             7:9='3';
-                             10:14='4'")   
+                            "0:2='1';
+                             3:6='2';
+                             7:10='3';
+                             11:hi='4'")   
 
 nut_sev$htr_nut_rank_high<-car::recode(nut_sev$htr_nut_rank,
                                         "1:2='0';
@@ -328,7 +332,7 @@ fsac_sev$htr_fsa_rank<-car::recode(fsac_sev$htr_fsa_score,
                                     "0:13='1';
                                     14:28='2';
                                     29:43='3';
-                                    44:1000='4'")   
+                                    44:hi='4'")   
 
 fsac_sev$htr_fsa_rank_high<-car::recode(fsac_sev$htr_fsa_rank,
                                          "1:2='0';
@@ -438,7 +442,7 @@ esnfi_sev$htr_esnfi_rank<-car::recode(esnfi_sev$htr_esnfi_score,
                                     "0:7='1';
                                     8:16='2';
                                     17:25='3';
-                                    26:1000='4'")   
+                                    26:hi='4'")   
 
 esnfi_sev$htr_esnfi_rank_high<-car::recode(esnfi_sev$htr_esnfi_rank,
                                              "1:2='0';
@@ -481,21 +485,21 @@ health_sev<-data %>%
 
 # give weights
 health_sev <-health_sev %>% 
-  mutate(more_people_died=village_threshold_quarters(more_people_died_perc),
-         health_functioning_access=3*village_threshold_quarters(health_functioning_access_perc),
-         health_closed=3*village_threshold_quarters(health_closed_perc),
-         birth_hospital=village_threshold_quarters(birth_hospital_perc),
-         health_prio=2*village_threshold_quarters(health_prio_perc))
+  mutate(more_people_died=          2 * village_threshold_quarters(more_people_died_perc),
+         health_functioning_access= 1 * village_threshold_quarters(health_functioning_access_perc),
+         health_closed=             3 * village_threshold_quarters(health_closed_perc),
+         birth_hospital=            1 * village_threshold_quarters(birth_hospital_perc),
+         health_prio=               1 * village_threshold_quarters(health_prio_perc))
 
 # edu score
 health_sev$htr_health_score<-coerc(health_sev[["more_people_died"]])+coerc(health_sev[["health_functioning_access"]])+coerc(health_sev[["health_closed"]])+coerc(health_sev[["birth_hospital"]])+coerc(health_sev[["health_prio"]])
 
 # edu rank
 health_sev$htr_health_rank<-car::recode(health_sev$htr_health_score,
-                                   "0:4='1';
-                                    5:8='2';
-                                    9:14='3';
-                                    15:20='4'")   
+                                   "0:5='1';
+                                    6:11='2';
+                                    12:18='3';
+                                    19:hi='4'")   
 
 health_sev$htr_health_rank_high<-car::recode(health_sev$htr_health_rank,
                                         "1:2='0';
