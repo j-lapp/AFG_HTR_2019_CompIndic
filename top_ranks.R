@@ -7,8 +7,8 @@ coerc<-function(x){as.numeric(as.character(x))}
 
 # load & prep inputs -------------------------------------------------------------
 
-data <- read.csv("input/data/HTR_2019_round1_merged_cleaned_master_2019-09-24.csv", stringsAsFactors = F, na.strings = c("", "NA"))
-weight<-read.csv("input/weights/REACH_AFG_H2R_R1_weights_0924.csv", stringsAsFactors = F, na.strings = c("", "NA"))
+data <- read.csv("input/data/HTR_2019_round1_final_v2.csv", stringsAsFactors = F, na.strings = c("", "NA"))
+weight<-read.csv("input/weights/HTR_round1_sev_dist.csv", stringsAsFactors = F, na.strings = c("", "NA"))
 
 data<-full_join(data, weight,by = c("district_reporting"="district"))
 data$weight<-coerc(data[["num_interviews"]])/coerc(data[["total_villages"]])

@@ -282,16 +282,16 @@ data$ag_impact_severe<-case_when(data$ag_negative_impacts=='ag_impact_half'~ 1,T
 fsac_sev<-data %>% 
   group_by(district_reporting) %>% 
   summarize(
-            hunger_extreme_perc=percent(hunger_extreme),
-            hunger_severe_perc=percent(hunger_severe),
-            borrow_extreme_perc=percent(borrow_extreme),
-            borrow_severe_perc=percent(borrow_severe),
-            reduced_food_extreme_perc=percent(reduced_food_extreme),
-            reduced_food_severe_perc=percent(reduced_food_severe),
+            hunger_extreme_perc=          percent(hunger_extreme),
+            hunger_severe_perc=           percent(hunger_severe),
+            borrow_extreme_perc=          percent(borrow_extreme),
+            borrow_severe_perc=           percent(borrow_severe),
+            reduced_food_extreme_perc=    percent(reduced_food_extreme),
+            reduced_food_severe_perc=     percent(reduced_food_severe),
             livestock_impact_extreme_perc=percent(livestock_impact_extreme),
-            livestock_impact_severe_perc=percent(livestock_impact_severe),
-            ag_impact_extreme_perc=percent(ag_impact_extreme),
-            ag_impact_severe_perc=percent(ag_impact_severe))
+            livestock_impact_severe_perc= percent(livestock_impact_severe),
+            ag_impact_extreme_perc=       percent(ag_impact_extreme),
+            ag_impact_severe_perc=        percent(ag_impact_severe))
 
 # give weights
 fsac_sev <-fsac_sev %>% 
