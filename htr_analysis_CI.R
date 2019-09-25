@@ -558,6 +558,18 @@ data<-full_join(data, weight,by = c("district_reporting"="districts"))
 
 data$weight<-coerc(data[["X..interview.conducted"]])/coerc(data[["total_settlements"]])
 
+
+# shorter alternative to the below:
+
+#   weighted_mean_by_rank<-function(x,weight){
+#     map_dbl(1:4,~ weighted.mean(x==.x,weight))
+#   }
+# 
+# data %>%
+#   select(ends_with("_rank")) %>% 
+#   map(weighted_mean_by_rank,data$weight)
+
+
 overall_sev<-data %>% 
   summarize(eie1= weighted.mean(htr_eie_rank==1, weight),
             eie2= weighted.mean(htr_eie_rank==2, weight),
