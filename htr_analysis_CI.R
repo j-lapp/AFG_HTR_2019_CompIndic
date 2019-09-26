@@ -1,10 +1,6 @@
-
-
-
 library(tidyverse)
-rm(list=ls())
 source("functions_sev.R")
-
+source("weights.R")
 
 
   
@@ -18,13 +14,18 @@ percent<-function(x,na.rm = T){
 }
 
 coerc<-function(x){as.numeric(chr(x))}
+
 ############################# loading data ###################################
 
-# changed file names per new files received from Shazmane on 25/09/09 13:40 GVA
 data <- read.csv("input/data/HTR_2019_round1_final_v2.csv", stringsAsFactors = F, na.strings = c("", "NA"))
-weight<-read.csv("input/weights/HTR_round1_sev_dist.csv", stringsAsFactors = F, na.strings = c("", "NA"))
 
-weight$weight<-coerc(weight[["X..interview.conducted"]])/coerc(weight[["total_settlements"]])
+# turns out both weights give the same results. I'm using the sample size counted from the data rows per district, not the sample size listed in the samplingframe
+
+data<-add_htr_weights(data,
+                      weights_original = TRUE,
+                      weights_updated = FALSE)
+
+
 
 # turn NAs to "question_skipped":
 noanswer_to_NA<-function(x,source_variables,df=data){
@@ -555,7 +556,7 @@ write.csv(data, "HTR_round1_sev_dist.csv")
 
 # join with weight
 
-data<-full_join(data, weight,by = c("district_reporting"="districts"))
+data<-add_htr_weights(data,weights_updated = TRUE)
 
 # data$weight<-coerc(data[["interview.conducted"]])/coerc(data[["total_settlements"]])
 

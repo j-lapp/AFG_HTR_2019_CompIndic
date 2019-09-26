@@ -1,3 +1,6 @@
+source("weights.R")
+
+
 coerc<-function(x){as.numeric(as.character(x))}
 
 
@@ -8,10 +11,12 @@ coerc<-function(x){as.numeric(as.character(x))}
 # load & prep inputs -------------------------------------------------------------
 
 data <- read.csv("input/data/HTR_2019_round1_final_v2.csv", stringsAsFactors = F, na.strings = c("", "NA"))
-weight<-read.csv("input/weights/HTR_round1_sev_dist.csv", stringsAsFactors = F, na.strings = c("", "NA"))
 
-data<-full_join(data, weight,by = c("district_reporting"="district"))
-data$weight<-coerc(data[["num_interviews"]])/coerc(data[["total_villages"]])
+# turns out both weights give the same results. I'm using the sample size counted from the data rows per district, not the sample size listed in the samplingframe
+
+data<-add_htr_weights(data,
+                      weights_original = TRUE,
+                      weights_updated = FALSE)
 
 
 
@@ -38,9 +43,14 @@ type_assistance %>% lapply(weighted.mean,type_assistance$weight,na.rm=T) %>%
   t %>% t %>% write.csv("type_assistance.csv")
   
 
+data$hum_aid_3_months[data$hum_aid_3_months=="no_answer"]<-NA
 
+summary_hum_aid_3_months<-weighted.mean(data$hum_aid_3_months=="yes", 
+                                         data$weight, # using weights from data column 
+                                         na.rm = TRUE) # and pretend NA records don't exist
 
-
+names(summary_hum_aid_3_months)<-"yes"
+write.csv(summary_hum_aid_3_months,"./hum_aid_3_months.csv")
 
 
 
