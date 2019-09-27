@@ -16,12 +16,13 @@ village_threshold_quarters<-function(x){
   # if there's values make sure they're 0 <= x <= 1
   if(!all(is.na(x))){if(any(x<0)){stop("fraction can't be smaller 0")}}
   if(!all(is.na(x))){if(any(x>1)){stop("fraction can't be larger  1")}}
-  breaks_smaller <- c(0.25, 0.50, 0.75)
-  (case_when(
-    (x<breaks_smaller[1])~0,
-    (x<breaks_smaller[2])~1,
-    (x<breaks_smaller[3])~2,
-    (x <= 1)~3))
+  # breaks_smaller <- c(0.25, 0.50, 0.75)
+  # (case_when(
+  #   (x<breaks_smaller[1])~0,
+  #   (x<breaks_smaller[2])~1,
+  #   (x<breaks_smaller[3])~2,
+  #   (x <= 1)~3))
+  x*100
 }
 
 # testing due to last minute changes:
